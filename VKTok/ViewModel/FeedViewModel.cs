@@ -18,13 +18,28 @@ namespace VKTok.ViewModel
     class FeedViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Post> _posts = new ObservableCollection<Post>();
-        public ObservableCollection<Post> Posts 
+        public ObservableCollection<Post> Posts
         {
             get => _posts;
-            set 
+            set
             {
                 _posts = value;
                 OnPropertyChanged(nameof(Posts));
+            }
+        }
+
+        private string next = "";
+        private bool CanAdd = true;
+
+        private int _i;
+        public int CurrentIndex
+        {
+            get => _i;
+            set
+            {
+                _i = value;
+                if (Posts.Count > 2 && CanAdd && Posts.Count - value <= 2) Add();
+                OnPropertyChanged();
             }
         }
         public FeedViewModel()
@@ -32,18 +47,27 @@ namespace VKTok.ViewModel
             Init();
         }
 
-        private async void Init() 
+        private void Init()
         {
+            next = "";
+            Posts = new ObservableCollection<Post>();
+            Add();
+        }
+        private async void Add()
+        {
+            CanAdd = false;
             HttpClient client = new HttpClient();
             var response = await client.GetAsync($"https://api.vk.com/method/" +
                 $"newsfeed.get?" +
                 $"&access_token={SingletonManeger.AuthKeys["access_token"]}" +
                 $"&filters=post,photo" +
+                $"&start_from={next}" +
                 $"&v=5.131");
 
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             var root = JsonConvert.DeserializeObject<Root>(responseBody);
+            next = root.response.next_from;
             foreach (var p in root.response.items)
             {
                 Post tmp = new Post();
@@ -102,9 +126,10 @@ namespace VKTok.ViewModel
                         }
                     }
                 }
-                if(tmp.Attaches != null && tmp.Attaches.Count != 0 || !string.IsNullOrEmpty(tmp.PostMessage))
-                Posts.Add(tmp);
+                if (tmp.Attaches != null && tmp.Attaches.Count != 0 || !string.IsNullOrEmpty(tmp.PostMessage))
+                    Posts.Add(tmp);
             }
+            CanAdd = true;
         }
 
 

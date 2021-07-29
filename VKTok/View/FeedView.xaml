@@ -20,47 +20,13 @@
     </Page.DataContext>
     <Grid>
         <MediaElement x:Name="me"/>
-        <FlipView Margin="0,0,0,0" ItemsSource="{Binding Posts}" SelectedIndex="{Binding CurrentIndex, Mode=TwoWay}">
+        <FlipView Margin="0,0,0,0" ItemsSource="{Binding Posts}" SelectedIndex="{Binding CurrentIndex, Mode=TwoWay}" ItemTemplateSelector="{StaticResource PostCompositionDataTemplate}">
             <FlipView.ItemsPanel >
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </FlipView.ItemsPanel>
 
-            <FlipView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <Image VerticalAlignment="Stretch" Source="{Binding PostAuthor.IconURL}"/>
-                            <TextBlock IsTextSelectionEnabled="True" Margin="10, 0" Text="{Binding PostAuthor.Name}" FontSize="40"/>
-                        </StackPanel>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-                            <Viewbox Stretch="Uniform" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                <GridView SelectionChanged="GridView_SelectionChanged" SelectedItem="{Binding SelectedAttached, Mode=TwoWay}" MaxWidth="2000" ItemsSource="{Binding Attaches}" ItemTemplateSelector="{StaticResource AttachDataTemplate}">
-                                    <GridView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <controls:WrapPanel HorizontalAlignment="Center"/>
-                                        </ItemsPanelTemplate>
-                                    </GridView.ItemsPanel>
-                                </GridView>
-                            </Viewbox>
-                            <ScrollViewer Grid.Column="1">
-                                <TextBlock IsTextSelectionEnabled="True" VerticalAlignment="Center" FontSize="25" MaxWidth="800" TextWrapping="Wrap" Text="{Binding PostMessage}"/>
-                            </ScrollViewer>
-                            <StackPanel Grid.Column="2"/>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </FlipView.ItemTemplate>
         </FlipView>
     </Grid>
 </Page>

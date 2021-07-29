@@ -4,17 +4,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VKTok"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:datatemplateselectors="using:VKTok.Servises.DataTemplateSelectors"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+    >
     <Grid>
-        <muxc:NavigationView x:Name="nv">
+        <muxc:NavigationView x:Name="nv" PaneDisplayMode="LeftCompact">
             <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItem Icon="Accept" Content="Подписки" Tag="SamplePage1" />
-                <muxc:NavigationViewItem Icon="Favorite" Content="Рекомендации" Tag="SamplePage2" />
+                <muxc:NavigationViewItem Icon="Accept" Content="Подписки" Tag="SamplePage1" x:Name="Sub"/>
+                <muxc:NavigationViewItem Icon="Favorite" Content="Рекомендации" Tag="SamplePage2" x:Name="Rec"/>
             </muxc:NavigationView.MenuItems>
             <Frame x:Name="nf"/>
         </muxc:NavigationView>
+        <Grid Visibility="Collapsed" x:Name="AttachGrid">
+            <Grid.Resources>
+                <DataTemplate x:Key="FullViewDataTemplatePhoto">
+                    <Grid>
+                        <Image Source="{Binding URL}"/>
+                        <TextBlock Text="Photo"/>
+                    </Grid>
+                </DataTemplate>
+
+                <DataTemplate x:Key="FullViewDataTemplateVideo">
+                    <WebView Source="{Binding VideoURL}"/>
+                </DataTemplate>
+                <datatemplateselectors:AttachDataTemplateSelector x:Key="FullViewDataTemplate"
+                                                      Photo="{StaticResource FullViewDataTemplatePhoto}"
+                                                      Video="{StaticResource FullViewDataTemplateVideo}"/>
+            </Grid.Resources>
+            <Grid.Background>
+                <AcrylicBrush FallbackColor="#007A7A7A" TintColor="#00807F7F" BackgroundSource="Backdrop" TintOpacity="0.2"/>
+            </Grid.Background>
+            <Button Click="CloseAttachGrid" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Height="50" Margin="5">
+                <SymbolIcon Symbol="Cancel"/>
+            </Button>
+            <FlipView Margin="80" x:Name="Gallery">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Image Source="{Binding URL}"/>
+                            <WebView Source="{Binding VideoURL}"/>
+                        </Grid>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+        </Grid>
     </Grid>
 </Page>

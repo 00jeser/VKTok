@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:VKTok.ViewModel" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
     <Page.DataContext>
         <vm:FeedViewModel/>
     </Page.DataContext>
@@ -38,7 +38,7 @@
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
                             <Viewbox Stretch="Uniform" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                <GridView MaxWidth="2000" ItemsSource="{Binding Attaches}">
+                                <GridView SelectionChanged="GridView_SelectionChanged" SelectedItem="{Binding SelectedAttached, Mode=TwoWay}" MaxWidth="2000" ItemsSource="{Binding Attaches}">
                                     <GridView.ItemTemplate>
                                         <DataTemplate>
                                             <Image MaxWidth="600" Source="{Binding URL}"/>
@@ -51,7 +51,9 @@
                                     </GridView.ItemsPanel>
                                 </GridView>
                             </Viewbox>
-                            <TextBlock IsTextSelectionEnabled="True" VerticalAlignment="Center" FontSize="25" MaxWidth="800" TextWrapping="Wrap" Text="{Binding PostMessage}" Grid.Column="1"/>
+                            <ScrollViewer Grid.Column="1">
+                                <TextBlock IsTextSelectionEnabled="True" VerticalAlignment="Center" FontSize="25" MaxWidth="800" TextWrapping="Wrap" Text="{Binding PostMessage}"/>
+                            </ScrollViewer>
                             <StackPanel Grid.Column="2"/>
                         </Grid>
                     </Grid>

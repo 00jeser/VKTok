@@ -29,5 +29,10 @@ namespace VKTok.View
             
             me.Source = new Uri("https://vk.com/video_ext.php?oid=-199152847&id=456241614&hash=b99d6e754d2bffb9&__ref=vk.api&api_hash=162738732908c2ea45bb17a01031_GI3TCNZZHE3DKNY");
         }
+
+        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (sender as GridView).SelectedItem = null;
+        }
     }
 }

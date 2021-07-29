@@ -132,6 +132,7 @@
     <Compile Include="Model\FeedModels.cs" />
     <Compile Include="Model\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servises\DataTemplateSelectors\AttachDataTemplateSelector.cs" />
     <Compile Include="Servises\SingletonManeger.cs" />
     <Compile Include="Servises\VideoUrlFinder.cs" />
     <Compile Include="ViewModel\FeedViewModel.cs" />
@@ -214,6 +215,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Servises\DataTemplateSelectors\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FeedView.xaml">
       <SubType>Designer</SubType>

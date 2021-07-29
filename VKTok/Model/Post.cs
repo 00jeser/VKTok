@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using VKTok.Servises;
 
 namespace VKTok.Model
 {
@@ -47,8 +48,20 @@ namespace VKTok.Model
         public string PostMessage { get; set; }
         public ObservableCollection<Attach> Attaches { get; set; }
 
-        private int _si;
-        public int SelectedIndex { get => _si; set => _si = value; }
+        public Attach SelectedAttached
+        {
+            get => null;
+            set
+            {
+                if (value != null)
+                {
+                    SingletonManeger.OpenImage(Attaches, value);
+                    SelectedAttached = null;
+                }
+                else
+                    OnPropertyChanged("SelectedAttached");
+            }
+        }
 
 
         //-----------------------------------------------------------------------------------------

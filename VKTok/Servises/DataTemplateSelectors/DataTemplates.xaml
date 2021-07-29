@@ -1,0 +1,21 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:datatemplateselectors="using:VKTok.Servises.DataTemplateSelectors"
+    xmlns:model="using:VKTok.Model">
+
+
+
+    <DataTemplate x:Key="FullViewDataTemplatePhoto">
+        <Image Source="{Binding URL}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FullViewDataTemplateVideo">
+        <WebView Source="{Binding VideoURL}"/>
+    </DataTemplate>
+    <datatemplateselectors:AttachDataTemplateSelector x:Key="FullViewDataTemplate"
+                                                      Photo="{StaticResource FullViewDataTemplatePhoto}"
+                                                      Video="{StaticResource FullViewDataTemplateVideo}"/>
+    
+    
+</ResourceDictionary>

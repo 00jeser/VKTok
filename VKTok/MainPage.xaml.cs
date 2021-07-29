@@ -25,15 +25,32 @@ namespace VKTok
             this.InitializeComponent();
             nf.Navigate(typeof(VKOAuth2));
             SingletonManeger.MainFrame = nf;
+            SingletonManeger.OpenImageEvent += OpenImage;
             Navigate();
         }
-        public async void Navigate() 
+
+        private void OpenImage(System.Collections.ObjectModel.ObservableCollection<Model.Post.Attach> attaches, Model.Post.Attach selectedAttach)
+        {
+            AttachGrid.Visibility = Visibility.Visible;
+            Gallery.SelectedItem = null;
+            Gallery.ItemsSource = null;
+            while (Gallery.ItemsSource != null) { }
+            Gallery.ItemsSource = attaches;
+            try { Gallery.SelectedItem = selectedAttach; } catch (Exception) { }
+        }
+
+        public async void Navigate()
         {
             while (SingletonManeger.AuthKeys.Count == 0)
                 await Task.Delay(200);
             nf.Navigate(typeof(View.FeedView));
-
+            nv.SelectedItem = Sub;
         }
 
+        private void CloseAttachGrid(object sender, RoutedEventArgs e)
+        {
+            AttachGrid.Visibility = Visibility.Collapsed;
+            Gallery.ItemsSource = null;
+        }
     }
 }

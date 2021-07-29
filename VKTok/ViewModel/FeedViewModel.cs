@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 using VKTok.Model;
 using VKTok.Servises;
 using Newtonsoft.Json;
-
+using System.IO;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace VKTok.ViewModel
 {
@@ -66,6 +67,9 @@ namespace VKTok.ViewModel
 
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
+            //var dp = new DataPackage();
+            //dp.SetText(responseBody);
+            //Clipboard.SetContent(dp);
             var root = JsonConvert.DeserializeObject<Root>(responseBody);
             next = root.response.next_from;
             foreach (var p in root.response.items)
@@ -78,7 +82,7 @@ namespace VKTok.ViewModel
                 {
                     if (-p.source_id == a.id)
                     {
-                        tmp.PostAuthor = new Post.Author()
+                        tmp.PostAuthor = new Author()
                         {
                             Name = a.name,
                             id = a.id,
@@ -88,28 +92,28 @@ namespace VKTok.ViewModel
                 }
                 if (p.attachments != null && p.attachments.Count != 0)
                 {
-                    tmp.Attaches = new ObservableCollection<Post.Attach>();
+                    tmp.Attaches = new ObservableCollection<Attach>();
                     foreach (var s in p.attachments)
                     {
                         if (s.type == "photo")
                         {
-                            tmp.Attaches.Add(new Post.AttachPhoto());
+                            tmp.Attaches.Add(new AttachPhoto());
                             int minS = int.MaxValue, maxS = 0;
                             foreach (var size in s.photo.sizes)
                             {
                                 if (size.height * size.width > maxS)
                                 {
-                                    (tmp.Attaches.Last() as Post.AttachPhoto).LargueURL = size.url;
+                                    (tmp.Attaches.Last() as AttachPhoto).LargueURL = size.url;
                                 }
                                 if (size.height * size.width < minS)
                                 {
-                                    (tmp.Attaches.Last() as Post.AttachPhoto).SmallURL = size.url;
+                                    (tmp.Attaches.Last() as AttachPhoto).SmallURL = size.url;
                                 }
                             }
                         }
-                        if (s.type == "video")
+                        else if (s.type == "video")
                         {
-                            var tmpv = new Post.AttachVideo()
+                            var tmpv = new AttachVideo()
                             {
                                 AccessKey = s.video.access_key,
                                 Description = s.video.description,
@@ -124,6 +128,40 @@ namespace VKTok.ViewModel
                             };
                             tmp.Attaches.Add(tmpv);
                         }
+                        else if (s.type == "link")
+                        {
+                            var tmpv = new AttachLink()
+                            {
+                                Caption = s.link.caption,
+                                Description = s.link.description,
+                                LinkURL = s.link.url,
+                                photoURL = s.link.photo?.sizes.OrderBy(x => x.width * x.height).Last().url,
+                                Title = s.link.title
+                            };
+                            tmp.Attaches.Add(tmpv);
+                        }
+                        else if (s.type == "doc")
+                        {
+                            var tmpv = new AttachDoc()
+                            {
+                                DocURL = s.doc.url,
+                                Title = s.doc.title,
+                                Preview = s.doc.preview?.photo.sizes.OrderBy(x => x.height * x.width).Last().url,
+                                Ext = s.doc.ext
+                            };
+                            tmp.Attaches.Add(tmpv);
+                        }
+                        else if (s.type == "poll")
+                        {
+                            var tmpv = new AttachPool()
+                            {
+                            };
+                            tmp.Attaches.Add(tmpv);
+                        }
+                        else 
+                        {
+                        }
+                        //link doc poll
                     }
                 }
                 if (tmp.Attaches != null && tmp.Attaches.Count != 0 || !string.IsNullOrEmpty(tmp.PostMessage))

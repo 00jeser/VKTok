@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace VKTok.Servises.DataTemplateSelectors
 {
-    class AttachDataTemplateSelector : DataTemplateSelector
+    class FullAttachDataTemplateSelector : DataTemplateSelector
     {
         public DataTemplate Image { get; set; }
         public DataTemplate Video { get; set; }
@@ -31,8 +31,6 @@ namespace VKTok.Servises.DataTemplateSelectors
                 return Image;
             if (item is AttachVideo)
                 return Video;
-            if (item is AttachDoc && (item as AttachDoc).Ext == "gif")
-                return Image;
             if (item is AttachDoc)
                 return Doc;
             if (item is AttachPool)

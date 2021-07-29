@@ -29,7 +29,7 @@ namespace VKTok
             Navigate();
         }
 
-        private void OpenImage(System.Collections.ObjectModel.ObservableCollection<Model.Post.Attach> attaches, Model.Post.Attach selectedAttach)
+        private void OpenImage(System.Collections.ObjectModel.ObservableCollection<Model.Attach> attaches, Model.Attach selectedAttach)
         {
             AttachGrid.Visibility = Visibility.Visible;
             Gallery.SelectedItem = null;

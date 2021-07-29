@@ -129,10 +129,13 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Class1.cs" />
     <Compile Include="Model\FeedModels.cs" />
     <Compile Include="Model\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servises\DataTemplateSelectors\AttachDataTemplateSelector.cs" />
+    <Compile Include="Servises\DataTemplateSelectors\FullAttachDataTemplateSelector.cs" />
+    <Compile Include="Servises\DataTemplateSelectors\PostCompositionDataTemplateSelectors.cs" />
     <Compile Include="Servises\SingletonManeger.cs" />
     <Compile Include="Servises\VideoUrlFinder.cs" />
     <Compile Include="ViewModel\FeedViewModel.cs" />

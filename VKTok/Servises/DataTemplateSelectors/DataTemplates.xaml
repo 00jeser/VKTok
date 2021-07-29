@@ -6,16 +6,93 @@
 
 
 
+    <!--================================FulView===========================================================-->
     <DataTemplate x:Key="FullViewDataTemplatePhoto">
         <Image Source="{Binding URL}"/>
     </DataTemplate>
-
     <DataTemplate x:Key="FullViewDataTemplateVideo">
         <WebView Source="{Binding VideoURL}"/>
     </DataTemplate>
-    <datatemplateselectors:AttachDataTemplateSelector x:Key="FullViewDataTemplate"
-                                                      Photo="{StaticResource FullViewDataTemplatePhoto}"
-                                                      Video="{StaticResource FullViewDataTemplateVideo}"/>
-    
-    
+    <DataTemplate x:Key="FullViewDataTemplateDoc">
+        <Grid>
+            <WebView Source="{Binding URL}" VerticalAlignment="Stretch" Margin="0,20,0,30"/>
+            <HyperlinkButton Content="Открыть в браузере" NavigateUri="{Binding URL}" VerticalAlignment="Bottom"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="FullViewDataTemplatePoll">
+        <TextBlock Text="Да сделаю я" Foreground="{ThemeResource SystemAccentColor}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="FullViewDataTemplateLink">
+        <Grid>
+            <TextBlock Text="{Binding Title}"/>
+            <WebView Source="{Binding URL}" VerticalAlignment="Stretch" Margin="0,20,0,30"/>
+            <HyperlinkButton Content="Открыть в браузере" NavigateUri="{Binding URL}" VerticalAlignment="Bottom"/>
+        </Grid>
+    </DataTemplate>
+    <datatemplateselectors:FullAttachDataTemplateSelector x:Key="FullViewDataTemplate"
+                                                          Image="{StaticResource FullViewDataTemplatePhoto}"
+                                                          Video="{StaticResource FullViewDataTemplateVideo}"
+                                                          Doc="{StaticResource FullViewDataTemplateDoc}"
+                                                          Pool="{StaticResource FullViewDataTemplatePoll}"
+                                                          Link="{StaticResource FullViewDataTemplateLink}"/>
+    <!--===========================================================================================-->
+
+
+
+
+    <!--=================================Attach==========================================================-->
+    <DataTemplate x:Key="AttachPhotoTemplate">
+        <Image Width="600" Source="{Binding URL}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="AttachVideoTemplate">
+        <Grid Width="600">
+            <Image Source="{Binding URL}"/>
+            <Viewbox Width="100" Height="100">
+                <SymbolIcon Symbol="Play"/>
+            </Viewbox>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="AttachLinkTemplate">
+        <Grid Margin="2.5" Width="1200" Height="1000" Background="White">
+            <Image Source="{Binding photoURL}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid Height="200" VerticalAlignment="Bottom">
+                <Grid.Background>
+                    <AcrylicBrush TintColor="#0000" />
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Margin="10">
+                    <TextBlock Text="{Binding Title}"/>
+                </Viewbox>
+                <Viewbox Margin="10" Grid.Row="1" HorizontalAlignment="Left" >
+                    <HyperlinkButton Content="{Binding Caption}" NavigateUri="{Binding LinkURL}"/>
+                </Viewbox>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="AttachDocTemplate">
+        <Grid Width="600" Height="600" Background="{ThemeResource AppBarBackgroundThemeBrush}">
+
+            <Viewbox Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <SymbolIcon Symbol="Page"/>
+            </Viewbox>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
+                <TextBlock TextWrapping="Wrap" FontSize="50" Text="{Binding Title}"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="AttachPoolTemplate">
+        <TextBlock Text="ПОТОМ СДЕЛАЮ ГОЛОСОВАЛКУ" Foreground="{ThemeResource SystemAccentColor}"/>
+    </DataTemplate>
+    <datatemplateselectors:AttachDataTemplateSelector x:Key="AttachDataTemplate"
+                                                      Image="{StaticResource AttachPhotoTemplate}"
+                                                      Video="{StaticResource AttachVideoTemplate}"
+                                                      Link="{StaticResource AttachLinkTemplate}"
+                                                      Doc="{StaticResource AttachDocTemplate}"
+                                                      Pool="{StaticResource AttachPoolTemplate}"/>
+    <!--===========================================================================================-->
+
+
 </ResourceDictionary>

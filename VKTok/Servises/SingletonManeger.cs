@@ -15,9 +15,9 @@ namespace VKTok.Servises
         public static Frame MainFrame;
         public static Dictionary<string, string> AuthKeys = new Dictionary<string, string>();
 
-        public delegate void OpenImageDelegat(ObservableCollection<Post.Attach> attaches, Post.Attach selectedAttach);
+        public delegate void OpenImageDelegat(ObservableCollection<Attach> attaches, Attach selectedAttach);
         public static event OpenImageDelegat OpenImageEvent;
-        public static void OpenImage(ObservableCollection<Post.Attach> attaches, Post.Attach selectedAttach) 
+        public static void OpenImage(ObservableCollection<Attach> attaches, Attach selectedAttach) 
         {
             OpenImageEvent?.Invoke(attaches, selectedAttach);
         }
